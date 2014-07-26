@@ -15,7 +15,7 @@ module Rosemary {
       this.state.add('main', State.Main);
 
       Game.socket = socket;
-      Game.socket.on('connect', function(){
+      Game.socket.on('connect', function(){ 
         console.log('Socket Connected with sessionId: '+Game.socket.io.engine.id)
         });
       Game.socket.on('disconnect', function(){

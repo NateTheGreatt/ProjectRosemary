@@ -13,25 +13,25 @@ module Rosemary.Prefab {
 
 
     constructor(game: Phaser.Game, x: number, y: number) {
-
-      var html = (<HTMLInputElement>document.getElementById('name')).value;
-
-      super(game, x, y, <string>html);
+      super(game, x, y, Game.socket.io.engine.id, this.getHtmlName());
       
       this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
       this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
       this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
       this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
 
-      //game.add.existing(this);
+      game.add.existing(this);
 
       this.live();
 
-      Game.socket.emit('new', {x: this.x, y: this.y, id: Game.socket.io.engine.id});
+      Game.socket.emit('new', this.packet());
     }
 
     update() {
       this.controls();
+
+      var htmlName = this.getHtmlName();
+      if(htmlName != this.name) this.name = htmlName;
 
       if(this.x != this.prevX || this.y != this.prevY) {
         Game.socket.emit('moved', this.packet());
@@ -39,6 +39,12 @@ module Rosemary.Prefab {
 
       this.prevX = this.x;
       this.prevY = this.y;
+
+      super.update();
+    }
+
+    getHtmlName() {
+      return (<HTMLInputElement>document.getElementById('name')).value;
     }
 
     controls() {
@@ -62,7 +68,7 @@ module Rosemary.Prefab {
     }
 
     packet() {
-      return {x: this.x, y: this.y, id: Game.socket.io.engine.id};
+      return {x: this.x, y: this.y, id: Game.socket.io.engine.id, name: this.name};
     }
 
   }

@@ -15,7 +15,7 @@ module Rosemary.State {
       this.entityFactory = new EntityFactory();
       this.entityPool = [];
       this.worldGroup = this.game.add.group();
-      for(var i=0;i<6;i++) this.entityPool.push(new Prefab.Entity(this.game,0,0,'null'));
+      for(var i=0;i<100;i++) this.entityPool.push(new Prefab.Entity(this.game,0,0,'entity'));
       this.player = new Prefab.Player(this.game, 10,10);
 
       this.setEventHandlers();
@@ -40,13 +40,19 @@ module Rosemary.State {
     	var main = this;
 
     	Game.socket.on('new player', function(data) {
-	    	console.log('Player entered world: ('+data.x+','+data.y+') '+data.id);
+	    	console.log('Player '+data.name+' entered world: ('+data.x+','+data.y+') '+data.id);
 	    	// because the update loop is constantly scanning the entityPool,
 	  		// we can use any index here and the item will be spawned
-	  		main.entityPool[0].id = data.id;
-	  		main.entityPool[0].x = data.x;
-	  		main.entityPool[0].y = data.y;
-	  		main.entityPool[0].exists = true;
+	  		for(var i=0;i<main.entityPool.length;i++) {
+	  			if(!main.entityPool[i].exists) {
+			  		main.entityPool[i].id = <string>data.id;
+			  		main.entityPool[i].name = <string>data.name;
+			  		main.entityPool[i].x = data.x;
+			  		main.entityPool[i].y = data.y;
+			  		main.entityPool[i].exists = true;
+			  		break;
+	  			}
+	  		}
     		});
 
     	Game.socket.on('player moved', function(data) {
@@ -55,6 +61,7 @@ module Rosemary.State {
     			if(data.id == ent.id) {
     				ent.x = data.x;
     				ent.y = data.y;
+    				ent.name = data.name;
     			}
     			}, 'this', true)
     		});
