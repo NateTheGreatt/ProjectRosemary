@@ -13,16 +13,17 @@ module Rosemary.Prefab {
 
 
     constructor(game: Phaser.Game, x: number, y: number) {
-      super(game, x, y, Game.socket.io.engine.id, this.getHtmlName());
+      if(this.getHtmlName()) var name = this.getHtmlName();
+      else var name = 'player' 
+      super(game, x, y, Game.socket.io.engine.id, name);
       
       this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
       this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
       this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
       this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
 
+      this.reset(x,y);
       game.add.existing(this);
-
-      this.live();
 
       Game.socket.emit('new', this.packet());
     }
@@ -48,17 +49,21 @@ module Rosemary.Prefab {
     }
 
     controls() {
+
+      this.body.velocity.x = 0;
+      this.body.velocity.y = 0;
+
       if(this.upKey.isDown) {
-          this.y--;
+          this.body.velocity.y = -100;
       }
       if(this.downKey.isDown) {
-          this.y++;
+          this.body.velocity.y = 100;
       }
       if(this.leftKey.isDown) {
-          this.x--;
+          this.body.velocity.x = -100;
       }
       if(this.rightKey.isDown) {
-          this.x++;
+          this.body.velocity.x = 100;
       }
 
       if(this.game.input.mousePointer.isDown) {

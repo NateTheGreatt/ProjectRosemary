@@ -1,43 +1,38 @@
 module Rosemary.Prefab {
-  export class Entity extends Phaser.Group {
+  export class Entity extends Phaser.Sprite {
 
     id: string;
-    sprite: Phaser.Sprite;
     name: string;
     label: any;
 
     constructor(game: Phaser.Game, x: number, y: number, id: string, name: string = 'entity') {
-      super(game, undefined, id, true, true);
+      super(game,  x, y, name);
       this.id = id;
       this.name = name;
-      this.exists = false;
-      this.visible = false;
+      //this.kill();
       this.x = x;
       this.y = y;
-      this.sprite = this.create(0,0,'entity');
       this.label = game.add.text(x,y,name,{ font: "12pt Arial", fill: "#ffffff", align: "center" });
       this.label.anchor.setTo(0.5,0.5);
       this.label.y = -10;
-      this.add(this.label);
-
-      //game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-
-    }
-
-    live() {
-      this.exists = true;
-      this.visible = true;
+      game.add.existing(this.label);
     }
 
     update() {
+      this.positionName();
       if(this.name != this.label.text) {
         this.label.setText(this.name); 
       }
+      super.update();
     }
 
-    kill() {
-      this.exists = false;
-      this.visible = false;
+    positionName() {
+      var xx = this.x+14;
+      var yy = this.y-10;
+      if(this.label.x != xx || this.label.y != yy) {
+        this.label.x = xx;
+        this.label.y = yy;
+      }
     }
   }
 }
