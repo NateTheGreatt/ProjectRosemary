@@ -3,7 +3,7 @@
 // Definitions by: Maido Kaara <https://github.com/v3rm0n>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-declare module "socket.io-client" {
+declare module io {
 
     export function connect(host: string, details?: any): Socket;
 

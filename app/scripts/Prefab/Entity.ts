@@ -1,13 +1,16 @@
 module Rosemary.Prefab {
   export class Entity extends Phaser.Sprite {
-    constructor(game: Phaser.Game, x: number, y: number) {
-      super(game, x, y, 'entity', 0);
 
-      game.add.existing(this);
+    id: String;
+
+    constructor(game: Phaser.Game, x: number, y: number, id: string) {
+      super(game, x, y, 'entity', 0);
+      this.id = id;
+      this.exists = false;
+
     }
 
     update() {
-      // Update prefab here
     }
   }
 }

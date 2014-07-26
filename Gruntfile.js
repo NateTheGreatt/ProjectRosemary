@@ -8,10 +8,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     typescript: {
       app: {
-        src: ['app/scripts/Game.ts'],
-        dest: 'build/js/main.js',
+        src: ['app/scripts/**/*.ts'],
+        dest: 'build/main.js',
         options: {
-          sourceMap: true
+          sourceMap: true,
+          module: 'amd'
         }
       }
     },
@@ -31,6 +32,7 @@ module.exports = function(grunt) {
           {
             'build/vendor/phaser.min.js': 'app/vendor/phaser-official/build/phaser.min.js',
             'build/vendor/socket.io.js': 'app/vendor/socket.io.js',
+            'build/vendor/socket.io-client.js': 'app/vendor/socket.io-client.js',
             'build/vendor/socket.io-client.d.ts': 'app/vendor/socket.io-client.d.ts'
           }
         ]

@@ -1,3 +1,5 @@
+///<reference path="../reference.ts" />
+
 module Rosemary.State {
   export class Boot extends Phaser.State {
     preload() {
@@ -8,6 +10,7 @@ module Rosemary.State {
       this.game.stage.backgroundColor = 0xFFFFFF;
 
       // Assign global settings here
+
       
       this.game.state.start('preload');
     }

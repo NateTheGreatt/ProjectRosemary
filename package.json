@@ -11,6 +11,7 @@
     "grunt-open": "^0.2.3",
     "grunt-contrib-connect": "^0.7.1",
     "connect-livereload": "^0.3.2",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ts": "~1.11.5"
   }
 }
