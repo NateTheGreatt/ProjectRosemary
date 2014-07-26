@@ -40,13 +40,14 @@ module.exports = function(grunt) {
     },
     open: {
       app: {
-        path: 'http://localhost:8080'
+        path: 'http://localhost:1337'
       }
     },
     connect: {
       app: {
         options: {
-          port: 8080,
+          port: 1337,
+          hostname: '*',
           base: 'build',
           livereload: true
         }
