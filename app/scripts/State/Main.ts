@@ -37,7 +37,7 @@ module Rosemary.State {
     }
 
     spawnEntity(i) {
- 			this.entityPool[i].reset();
+ 			//this.entityPool[i].reset();
  			this.worldGroup.add(this.entityPool.splice(i,1)[0]);
     }
 
@@ -50,8 +50,10 @@ module Rosemary.State {
 	  		// we can use any index here and the item will be spawned
 	  		for(var i=0;i<main.entityPool.length;i++) {
 	  			if(!main.entityPool[i].exists) {
+	  				console.log('new guy');
 			  		main.entityPool[i].id = <string>data.id;
 			  		main.entityPool[i].name = <string>data.name;
+			  		//main.entityPool[i].reset(data.x,data.y);
 			  		main.entityPool[i].x = data.x;
 			  		main.entityPool[i].y = data.y;
 			  		main.entityPool[i].exists = true;
@@ -75,6 +77,7 @@ module Rosemary.State {
     		main.worldGroup.forEach(function(ent) {
     			if(data.id == ent.id) {
     				ent.kill();
+    				console.log(ent.name+' left the server');
     			}
     			}, 'this', true)
     		})

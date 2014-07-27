@@ -28,6 +28,6 @@ module Rosemary {
 }
 
 window.onload = () => {
-  var socketio = io.connect('http://69.119.217.124:3000', {'forceNew': true});
+  var socketio = io.connect('http://69.119.217.124:3000');
   var game = new Rosemary.Game(socketio);
 }

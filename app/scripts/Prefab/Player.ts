@@ -22,7 +22,7 @@ module Rosemary.Prefab {
       this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
       this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
 
-      this.reset(x,y);
+      this.exists = true;
       game.add.existing(this);
 
       Game.socket.emit('new', this.packet());
